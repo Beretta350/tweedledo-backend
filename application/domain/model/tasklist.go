@@ -1,4 +1,4 @@
-package models
+package model
 
 import (
 	"time"
@@ -6,6 +6,18 @@ import (
 	"github.com/asaskevich/govalidator"
 	"github.com/google/uuid"
 )
+
+type TaskListRepositoryInterface interface {
+	CreateTaskList(t *TaskList) error
+	UpdateTaskList(t *TaskList) error
+	DeleteTaskList(t *TaskList) error
+	GetAllTasksLists() ([]TaskList, error)
+	GetTasksInTaskList(t *TaskList) ([]Task, error)
+}
+
+func init() {
+	govalidator.SetFieldsRequiredByDefault(true)
+}
 
 type TaskList struct {
 	Base  `valid:"required"`

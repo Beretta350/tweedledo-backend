@@ -3,7 +3,7 @@ package main
 import (
 	"os"
 
-	"github.com/tweedledo/configs/db"
+	"github.com/tweedledo/config/db"
 )
 
 func main() {

@@ -7,7 +7,7 @@ import (
 	"runtime"
 
 	"github.com/joho/godotenv"
-	"github.com/tweedledo/domain/models"
+	"github.com/tweedledo/application/domain/model"
 	"gorm.io/driver/postgres"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
@@ -51,7 +51,7 @@ func ConnectDB(env string) *gorm.DB {
 
 	if os.Getenv("AutoMigrateDb") == "true" {
 		log.Printf("P=db M=ConnectDB env=%v auto migrating", env)
-		db.AutoMigrate(&models.TaskList{}, &models.Task{})
+		db.AutoMigrate(&model.TaskList{}, &model.Task{})
 	}
 
 	log.Printf("P=db M=ConnectDB env=%v database connected", env)
