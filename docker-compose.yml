@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+    postgres:
+        image: postgres:latest
+        restart: always
+        container_name: postgres
+        environment:
+          - POSTGRES_USER=postgres
+          - POSTGRES_PASSWORD=postgres
+          - POSTGRES_DB=localdb
+        ports:
+          - '5432:5432'
+        volumes: 
+          - ./env/db/data:/var/lib/postgresql/data
+          - ./env/db/sql/init.sql:/docker-entrypoint-initdb.d/init.sql
+        healthcheck:
+          test: [ "CMD-SHELL", "sh -c 'pg_isready -U postgres -d localdb'" ]
+          interval: 10s
+          timeout: 5s
+          retries: 3
