@@ -12,9 +12,10 @@ func init() {
 }
 
 type TaskRepositoryInterface interface {
-	CreateTask(task *Task) error
-	UpdateTask(task *Task) error
-	DeleteTask(task *Task) error
+	CreateTask(task *Task) (*Task, error)
+	UpdateTask(task *Task) (*Task, error)
+	DeleteTask(task *Task) (*Task, error)
+	GetTasksInTaskList(tasklistId string) ([]*Task, error)
 }
 
 type Task struct {

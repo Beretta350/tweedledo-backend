@@ -8,11 +8,11 @@ import (
 )
 
 type TaskListRepositoryInterface interface {
-	CreateTaskList(t *TaskList) error
-	UpdateTaskList(t *TaskList) error
-	DeleteTaskList(t *TaskList) error
-	GetAllTasksLists() ([]TaskList, error)
-	GetTasksInTaskList(t *TaskList) ([]Task, error)
+	CreateTaskList(t *TaskList) (*TaskList, error)
+	UpdateTaskList(t *TaskList) (*TaskList, error)
+	DeleteTaskList(t *TaskList) (*TaskList, error)
+	GetTaskListById(id string) (*TaskList, error)
+	GetAllTasksLists() ([]*TaskList, error)
 }
 
 func init() {
