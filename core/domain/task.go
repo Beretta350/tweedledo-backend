@@ -1,4 +1,4 @@
-package model
+package domain
 
 import (
 	"time"
@@ -9,13 +9,6 @@ import (
 
 func init() {
 	govalidator.SetFieldsRequiredByDefault(true)
-}
-
-type TaskRepositoryInterface interface {
-	CreateTask(task *Task) (*Task, error)
-	UpdateTask(task *Task) (*Task, error)
-	DeleteTask(task *Task) (*Task, error)
-	GetTasksInTaskList(tasklistId string) ([]*Task, error)
 }
 
 type Task struct {

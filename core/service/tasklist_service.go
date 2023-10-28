@@ -3,14 +3,15 @@ package service
 import (
 	"log"
 
-	"github.com/tweedledo/application/domain/model"
+	"github.com/tweedledo/core/domain"
+	"github.com/tweedledo/core/ports"
 )
 
 type TaskListService struct {
-	TaskListRepository model.TaskListRepositoryInterface
+	TaskListRepository ports.TaskListRepositoryInterface
 }
 
-func (tl *TaskListService) GetTaskListById(tasklistId string) (*model.TaskList, error) {
+func (tl *TaskListService) GetTaskListById(tasklistId string) (*domain.TaskList, error) {
 	tasklist, err := tl.TaskListRepository.GetTaskListById(tasklistId)
 	if err != nil {
 		log.Fatalf("P=Service M=GetTaskListById tasklistId=%v error=%v", tasklistId, err.Error())
@@ -20,9 +21,9 @@ func (tl *TaskListService) GetTaskListById(tasklistId string) (*model.TaskList, 
 	return tasklist, nil
 }
 
-func (tl *TaskListService) CreateTaskList(name string) (*model.TaskList, error) {
-	tasks := make([]*model.Task, 0)
-	tasklist, err := model.NewTaskList(name, tasks)
+func (tl *TaskListService) CreateTaskList(name string) (*domain.TaskList, error) {
+	tasks := make([]*domain.Task, 0)
+	tasklist, err := domain.NewTaskList(name, tasks)
 	if err != nil {
 		log.Fatalf("P=Service M=GetTaskListById tasklistName=%v error=%v", name, err.Error())
 		return tasklist, err

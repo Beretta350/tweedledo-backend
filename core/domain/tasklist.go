@@ -1,4 +1,4 @@
-package model
+package domain
 
 import (
 	"time"
@@ -6,14 +6,6 @@ import (
 	"github.com/asaskevich/govalidator"
 	"github.com/google/uuid"
 )
-
-type TaskListRepositoryInterface interface {
-	CreateTaskList(t *TaskList) (*TaskList, error)
-	UpdateTaskList(t *TaskList) (*TaskList, error)
-	DeleteTaskList(t *TaskList) (*TaskList, error)
-	GetTaskListById(id string) (*TaskList, error)
-	GetAllTasksLists() ([]*TaskList, error)
-}
 
 func init() {
 	govalidator.SetFieldsRequiredByDefault(true)
