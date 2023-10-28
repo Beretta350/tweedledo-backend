@@ -1,6 +1,8 @@
 package controller
 
 import (
+	"log"
+
 	"github.com/gin-gonic/gin"
 	"github.com/tweedledo/core/ports"
 )
@@ -21,8 +23,10 @@ func NewTaskListController(
 }
 
 func (ctrl *TaskListController) GetTaskListById(c *gin.Context) {
+	log.Printf("P=Controller M=GetTaskListById tasklistId=%v", c.Query("id"))
 	tasklist, err := ctrl.tasklistService.GetTaskListById(c.Query("id"))
 	if err != nil {
+		log.Printf("P=Controller M=GetTaskListById error=%v", err.Error())
 		c.AbortWithStatusJSON(500, gin.H{"message": err.Error()})
 		return
 	}

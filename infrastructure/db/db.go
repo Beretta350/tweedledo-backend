@@ -22,7 +22,7 @@ func init() {
 
 	err := godotenv.Load(basepath + "../../.env")
 	if err != nil {
-		log.Fatalf("Error loading .env files")
+		log.Printf("Error loading .env files")
 	}
 }
 
@@ -32,7 +32,7 @@ func ConnectDB(env string) *gorm.DB {
 	var err error
 
 	if env != "test" {
-		log.Printf("P=db M=ConnectDB env=%v connecting in postgres", env)
+		log.Printf("P=db M=ConnectDB env=%v trying to connect in postgres", env)
 		dsn = os.Getenv("dsn")
 		db, err = gorm.Open(postgres.Open(dsn))
 	} else {
@@ -41,8 +41,7 @@ func ConnectDB(env string) *gorm.DB {
 	}
 
 	if err != nil {
-		log.Fatalf("Error connecting to database: %v", err)
-		panic(err)
+		panic("Error connecting to database:" + err.Error())
 	}
 
 	if os.Getenv("debug") == "true" {

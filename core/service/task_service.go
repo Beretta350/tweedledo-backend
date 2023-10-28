@@ -27,13 +27,13 @@ func (s *TaskService) CreateTask(name string, desc string, tasklistId string) (*
 
 	task, err := domain.NewTask(name, desc, tasklist)
 	if err != nil {
-		log.Fatalf("P=Service M=CreateTask step=domain name=%v error=%v", name, err.Error())
+		log.Printf("P=Service M=CreateTask step=domain name=%v error=%v", name, err.Error())
 		return task, err
 	}
 
 	s.taskRepository.CreateTask(task)
 	if err != nil {
-		log.Fatalf("P=Service M=CreateTask step=repository name=%v error=%v", name, err.Error())
+		log.Printf("P=Service M=CreateTask step=repository name=%v error=%v", name, err.Error())
 		return task, err
 	}
 

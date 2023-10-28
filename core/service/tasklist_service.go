@@ -20,8 +20,8 @@ func NewTaskListService(taskListRepository ports.TaskListRepositoryInterface) *T
 func (tl *TaskListService) GetTaskListById(tasklistId string) (*domain.TaskList, error) {
 	tasklist, err := tl.taskListRepository.GetTaskListById(tasklistId)
 	if err != nil {
-		log.Fatalf("P=Service M=GetTaskListById tasklistId=%v error=%v", tasklistId, err.Error())
-		return tasklist, err
+		log.Printf("P=Service M=GetTaskListById tasklistId=%v error=%v", tasklistId, err)
+		return nil, err
 	}
 
 	return tasklist, nil
@@ -31,13 +31,13 @@ func (tl *TaskListService) CreateTaskList(name string) (*domain.TaskList, error)
 	tasks := make([]*domain.Task, 0)
 	tasklist, err := domain.NewTaskList(name, tasks)
 	if err != nil {
-		log.Fatalf("P=Service M=GetTaskListById tasklistName=%v error=%v", name, err.Error())
+		log.Printf("P=Service M=GetTaskListById tasklistName=%v error=%v", name, err.Error())
 		return tasklist, err
 	}
 
 	tasklist, err = tl.taskListRepository.CreateTaskList(tasklist)
 	if err != nil {
-		log.Fatalf("P=Service M=GetTaskListById step=repository tasklistName=%v error=%v", name, err.Error())
+		log.Printf("P=Service M=GetTaskListById step=repository tasklistName=%v error=%v", name, err.Error())
 		return tasklist, err
 	}
 

@@ -37,7 +37,11 @@ func (t *TaskListRepository) DeleteTaskList(tasklist *domain.TaskList) (*domain.
 }
 func (t *TaskListRepository) GetTaskListById(id string) (*domain.TaskList, error) {
 	tasklist := domain.TaskList{}
-	result := t.DB.Where("id = ?", id).First(tasklist)
+	result := t.DB.First(tasklist, id)
+	if result.Error != nil {
+		return nil, result.Error
+	}
+
 	return &tasklist, result.Error
 }
 func (t *TaskListRepository) GetAllTasksLists() ([]*domain.TaskList, error) {
