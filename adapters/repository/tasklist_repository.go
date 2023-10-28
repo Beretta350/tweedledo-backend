@@ -11,6 +11,12 @@ type TaskListRepository struct {
 	DB *gorm.DB
 }
 
+func NewTaskListRepository(database *gorm.DB) *TaskListRepository {
+	return &TaskListRepository{
+		DB: database,
+	}
+}
+
 func (t *TaskListRepository) CreateTaskList(tasklist *domain.TaskList) (*domain.TaskList, error) {
 	result := t.DB.Create(tasklist)
 	return tasklist, result.Error

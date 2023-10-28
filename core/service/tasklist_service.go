@@ -8,11 +8,17 @@ import (
 )
 
 type TaskListService struct {
-	TaskListRepository ports.TaskListRepositoryInterface
+	taskListRepository ports.TaskListRepositoryInterface
+}
+
+func NewTaskListService(taskListRepository ports.TaskListRepositoryInterface) *TaskListService {
+	return &TaskListService{
+		taskListRepository: taskListRepository,
+	}
 }
 
 func (tl *TaskListService) GetTaskListById(tasklistId string) (*domain.TaskList, error) {
-	tasklist, err := tl.TaskListRepository.GetTaskListById(tasklistId)
+	tasklist, err := tl.taskListRepository.GetTaskListById(tasklistId)
 	if err != nil {
 		log.Fatalf("P=Service M=GetTaskListById tasklistId=%v error=%v", tasklistId, err.Error())
 		return tasklist, err
@@ -29,7 +35,7 @@ func (tl *TaskListService) CreateTaskList(name string) (*domain.TaskList, error)
 		return tasklist, err
 	}
 
-	tasklist, err = tl.TaskListRepository.CreateTaskList(tasklist)
+	tasklist, err = tl.taskListRepository.CreateTaskList(tasklist)
 	if err != nil {
 		log.Fatalf("P=Service M=GetTaskListById step=repository tasklistName=%v error=%v", name, err.Error())
 		return tasklist, err

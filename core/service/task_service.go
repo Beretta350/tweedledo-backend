@@ -8,12 +8,22 @@ import (
 )
 
 type TaskService struct {
-	TaskRepository  ports.TaskRepositoryInterface
-	TaskListService ports.TaskListServiceInterface
+	taskRepository  ports.TaskRepositoryInterface
+	taskListService ports.TaskListServiceInterface
+}
+
+func NewTaskService(
+	taskRepository ports.TaskRepositoryInterface,
+	taskListService ports.TaskListServiceInterface,
+) *TaskService {
+	return &TaskService{
+		taskRepository:  taskRepository,
+		taskListService: taskListService,
+	}
 }
 
 func (s *TaskService) CreateTask(name string, desc string, tasklistId string) (*domain.Task, error) {
-	tasklist, err := s.TaskListService.GetTaskListById(tasklistId)
+	tasklist, err := s.taskListService.GetTaskListById(tasklistId)
 
 	task, err := domain.NewTask(name, desc, tasklist)
 	if err != nil {
@@ -21,7 +31,7 @@ func (s *TaskService) CreateTask(name string, desc string, tasklistId string) (*
 		return task, err
 	}
 
-	s.TaskRepository.CreateTask(task)
+	s.taskRepository.CreateTask(task)
 	if err != nil {
 		log.Fatalf("P=Service M=CreateTask step=repository name=%v error=%v", name, err.Error())
 		return task, err
