@@ -5,6 +5,7 @@ import "github.com/tweedledo/core/domain"
 // TaskList's inbound ports
 type TaskListServiceInterface interface {
 	GetTaskListById(tasklistId string) (*domain.TaskList, error)
+	GetAllTaskList() ([]*domain.TaskList, error)
 	CreateTaskList(name string) (*domain.TaskList, error)
 }
 

@@ -23,10 +23,29 @@ func NewTaskListController(
 }
 
 func (ctrl *TaskListController) GetTaskListById(c *gin.Context) {
-	log.Printf("P=Controller M=GetTaskListById tasklistId=%v", c.Query("id"))
-	tasklist, err := ctrl.tasklistService.GetTaskListById(c.Query("id"))
+	log.Printf("P=Controller M=GetTaskListById tasklistId=%v", c.Param("id"))
+	tasklist, err := ctrl.tasklistService.GetTaskListById(c.Param("id"))
 	if err != nil {
-		log.Printf("P=Controller M=GetTaskListById error=%v", err.Error())
+		c.AbortWithStatusJSON(500, gin.H{"message": err.Error()})
+		return
+	}
+	c.JSON(200, tasklist)
+}
+
+func (ctrl *TaskListController) GetAllTaskList(c *gin.Context) {
+	log.Printf("P=Controller M=GetAllTaskList")
+	tasklist, err := ctrl.tasklistService.GetAllTaskList()
+	if err != nil {
+		c.AbortWithStatusJSON(500, gin.H{"message": err.Error()})
+		return
+	}
+	c.JSON(200, tasklist)
+}
+
+func (ctrl *TaskListController) CreateTaskList(c *gin.Context) {
+	log.Printf("P=Controller M=CreateTaskList name=%v", c.Query("name"))
+	tasklist, err := ctrl.tasklistService.CreateTaskList(c.Query("name"))
+	if err != nil {
 		c.AbortWithStatusJSON(500, gin.H{"message": err.Error()})
 		return
 	}

@@ -17,6 +17,18 @@ func NewTaskListRepository(database *gorm.DB) *TaskListRepository {
 	}
 }
 
+func (t *TaskListRepository) GetTaskListById(id string) (*domain.TaskList, error) {
+	var tasklist *domain.TaskList
+	result := t.DB.Where("id = ?", id).First(&tasklist)
+	return tasklist, result.Error
+
+}
+func (t *TaskListRepository) GetAllTasksLists() ([]*domain.TaskList, error) {
+	var tasklists []*domain.TaskList
+	result := t.DB.Find(&tasklists)
+	return tasklists, result.Error
+}
+
 func (t *TaskListRepository) CreateTaskList(tasklist *domain.TaskList) (*domain.TaskList, error) {
 	result := t.DB.Create(tasklist)
 	return tasklist, result.Error
@@ -34,18 +46,4 @@ func (t *TaskListRepository) DeleteTaskList(tasklist *domain.TaskList) (*domain.
 		log.Print("P=Repository M=UpdateTaskList no rows affected")
 	}
 	return tasklist, result.Error
-}
-func (t *TaskListRepository) GetTaskListById(id string) (*domain.TaskList, error) {
-	tasklist := domain.TaskList{}
-	result := t.DB.First(tasklist, id)
-	if result.Error != nil {
-		return nil, result.Error
-	}
-
-	return &tasklist, result.Error
-}
-func (t *TaskListRepository) GetAllTasksLists() ([]*domain.TaskList, error) {
-	tasklists := []*domain.TaskList{}
-	result := t.DB.Find(tasklists)
-	return tasklists, result.Error
 }
