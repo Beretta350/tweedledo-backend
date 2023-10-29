@@ -13,10 +13,10 @@ func init() {
 
 type Task struct {
 	Base        `valid:"required"`
-	Name        string    `gorm:"column:name;type:varchar(255);not null" valid:"notnull"`
-	Description string    `gorm:"column:description;type:text" valid:"-"`
-	TaskList    *TaskList `valid:"-"`
-	TaskListID  string    `gorm:"column:tasklist_id;type:uuid;not null" valid:"-"`
+	Name        string    `json:"name" gorm:"column:name;type:varchar(255);not null" valid:"notnull"`
+	Description string    `json:"description" gorm:"column:description;type:text" valid:"-"`
+	TaskList    *TaskList `json:"-" valid:"-"`
+	TaskListID  string    `json:"tasklist_id" gorm:"column:tasklist_id;type:uuid;not null" valid:"-"`
 }
 
 func (t *Task) isValid() error {

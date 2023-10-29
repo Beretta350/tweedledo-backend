@@ -18,14 +18,14 @@ func NewTaskListRepository(database *gorm.DB) *TaskListRepository {
 }
 
 func (t *TaskListRepository) GetTaskListById(id string) (*domain.TaskList, error) {
-	var tasklist *domain.TaskList
-	result := t.DB.Where("id = ?", id).First(&tasklist)
-	return tasklist, result.Error
+	tasklist := domain.TaskList{}
+	result := t.DB.Preload("Tasks").Where("id = ?", id).First(&tasklist)
+	return &tasklist, result.Error
 
 }
 func (t *TaskListRepository) GetAllTasksLists() ([]*domain.TaskList, error) {
-	var tasklists []*domain.TaskList
-	result := t.DB.Find(&tasklists)
+	tasklists := []*domain.TaskList{}
+	result := t.DB.Preload("Tasks").Find(&tasklists)
 	return tasklists, result.Error
 }
 

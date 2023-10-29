@@ -38,8 +38,7 @@ func (tl *TaskListService) GetAllTaskList() ([]*domain.TaskList, error) {
 }
 
 func (tl *TaskListService) CreateTaskList(name string) (*domain.TaskList, error) {
-	tasks := make([]*domain.Task, 0)
-	tasklist, err := domain.NewTaskList(name, tasks)
+	tasklist, err := domain.NewTaskList(name, []*domain.Task{})
 	if err != nil {
 		log.Printf("P=Service M=GetTaskListById tasklistName=%v error=%v", name, err.Error())
 		return tasklist, err
