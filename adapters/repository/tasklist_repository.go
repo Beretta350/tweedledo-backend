@@ -23,7 +23,7 @@ func (t *TaskListRepository) GetTaskListById(id string) (*domain.TaskList, error
 	return &tasklist, result.Error
 
 }
-func (t *TaskListRepository) GetAllTasksLists() ([]*domain.TaskList, error) {
+func (t *TaskListRepository) GetAllTaskLists() ([]*domain.TaskList, error) {
 	tasklists := []*domain.TaskList{}
 	result := t.DB.Preload("Tasks").Find(&tasklists)
 	return tasklists, result.Error

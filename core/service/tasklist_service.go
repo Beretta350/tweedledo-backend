@@ -28,7 +28,7 @@ func (tl *TaskListService) GetTaskListById(tasklistId string) (*domain.TaskList,
 }
 
 func (tl *TaskListService) GetAllTaskList() ([]*domain.TaskList, error) {
-	tasklist, err := tl.taskListRepository.GetAllTasksLists()
+	tasklist, err := tl.taskListRepository.GetAllTaskLists()
 	if err != nil {
 		log.Printf("P=Service M=GetAllTaskList error=%v", err)
 		return nil, err

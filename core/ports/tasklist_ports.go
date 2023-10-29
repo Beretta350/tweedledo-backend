@@ -15,5 +15,5 @@ type TaskListRepositoryInterface interface {
 	UpdateTaskList(t *domain.TaskList) (*domain.TaskList, error)
 	DeleteTaskList(t *domain.TaskList) (*domain.TaskList, error)
 	GetTaskListById(id string) (*domain.TaskList, error)
-	GetAllTasksLists() ([]*domain.TaskList, error)
+	GetAllTaskLists() ([]*domain.TaskList, error)
 }
