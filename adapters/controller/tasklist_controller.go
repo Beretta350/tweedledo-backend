@@ -43,11 +43,18 @@ func (ctrl *TaskListController) GetAllTaskList(c *gin.Context) {
 }
 
 func (ctrl *TaskListController) CreateTaskList(c *gin.Context) {
-	log.Printf("P=Controller M=CreateTaskList name=%v", c.Query("name"))
-	tasklist, err := ctrl.tasklistService.CreateTaskList(c.Query("name"))
+	tasklistJSON := struct{ Name string }{Name: ""}
+	if err := c.BindJSON(&tasklistJSON); err != nil {
+		c.AbortWithStatusJSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	log.Printf("P=Controller M=CreateTaskList name=%v", tasklistJSON.Name)
+
+	tasklist, err := ctrl.tasklistService.CreateTaskList(tasklistJSON.Name)
 	if err != nil {
 		c.AbortWithStatusJSON(500, gin.H{"message": err.Error()})
 		return
 	}
-	c.JSON(200, tasklist)
+	c.JSON(201, tasklist)
 }

@@ -36,6 +36,7 @@ func ConnectDB(env string) *gorm.DB {
 		dsn = os.Getenv("dsn")
 		db, err = gorm.Open(postgres.Open(dsn))
 	} else {
+		log.Printf("P=db M=ConnectDB env=%v trying to connect in memory sqlite", env)
 		dsn = os.Getenv("dsnTest")
 		db, err = gorm.Open(sqlite.Open(dsn))
 	}
