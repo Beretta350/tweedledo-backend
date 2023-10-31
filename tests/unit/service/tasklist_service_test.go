@@ -1,4 +1,4 @@
-package service_test
+package tests
 
 import (
 	"errors"
@@ -33,6 +33,7 @@ func TestServiceGetTaskListByIdSuccess(t *testing.T) {
 	response, err := service.GetTaskListById("TEST")
 	if err != nil {
 		t.Fatalf("P=Service T=TestServiceGetTaskListByIdSuccess failed error=%v", err.Error())
+		t.FailNow()
 	}
 
 	assert.Equal(t, response.ID, "TestID")
@@ -68,6 +69,7 @@ func TestServiceGetAllTaskListSuccess(t *testing.T) {
 	response, err := service.GetAllTaskList()
 	if err != nil {
 		t.Fatalf("P=Service T=TestServiceGetAllTaskListSuccess failed error=%v", err.Error())
+		t.FailNow()
 	}
 
 	assert.Equal(t, len(response), 1)
@@ -79,9 +81,6 @@ func TestServiceGetAllTaskListSuccess(t *testing.T) {
 func TestServiceGetAllTaskListError(t *testing.T) {
 	mockCtrl := gomock.NewController(t)
 	defer mockCtrl.Finish()
-
-	tasklists := []*domain.TaskList{}
-	tasklists = append(tasklists, tasklistSuccess)
 
 	mockObj := mock.NewMockTaskListRepositoryInterface(mockCtrl)
 	mockObj.EXPECT().GetAllTaskLists().Return(nil, errors.New("Test error"))
@@ -104,6 +103,7 @@ func TestServiceCreateTaskListSuccess(t *testing.T) {
 	response, err := service.CreateTaskList("Test")
 	if err != nil {
 		t.Fatalf("P=Service T=TestServiceCreateTaskListSuccess failed error=%v", err.Error())
+		t.FailNow()
 	}
 
 	assert.Equal(t, response.ID, "TestID")
