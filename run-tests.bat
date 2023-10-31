@@ -1,6 +1,12 @@
 @echo off
-call go test .\tests\unit\domain\tasklist_test.go -coverpkg="github.com/tweedledo/core/domain" -coverprofile=".\tests\coverage\coverage-domain.out"
-call go test .\tests\unit\service\tasklist_service_test.go -coverpkg="github.com/tweedledo/core/service" -coverprofile=".\tests\coverage\coverage-service.out"
+
+set "newDirectory=.\tests\coverage"
+if not exist "%newDirectory%" (
+    mkdir "%newDirectory%"
+)
+
+go test .\tests\unit\domain\tasklist_test.go -coverpkg="github.com/tweedledo/core/domain" -coverprofile=".\tests\coverage\coverage-domain.out"
+go test .\tests\unit\service\tasklist_service_test.go -coverpkg="github.com/tweedledo/core/service" -coverprofile=".\tests\coverage\coverage-service.out"
 
 set "sourceFile=.\tests\coverage\coverage-domain.out"
 set "appendFile=.\tests\coverage\coverage-service.out"
@@ -19,3 +25,6 @@ move temp.txt "%thirdFile%"
 echo Complete covarage in "%thirdFile%" file
 
 call go tool cover -html=%thirdFile%
+
+del temp.txt
+del temp2.txt
