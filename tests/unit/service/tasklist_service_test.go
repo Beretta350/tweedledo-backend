@@ -111,7 +111,7 @@ func TestServiceCreateTaskListSuccess(t *testing.T) {
 	assert.Equal(t, response.Tasks, []*domain.Task{})
 }
 
-func TestServiceCreateTaskListError(t *testing.T) {
+func TestServiceCreateTaskListRepositoryError(t *testing.T) {
 	mockCtrl := gomock.NewController(t)
 	defer mockCtrl.Finish()
 
@@ -123,4 +123,16 @@ func TestServiceCreateTaskListError(t *testing.T) {
 
 	assert.NotEqual(t, err, nil)
 	assert.Equal(t, err.Error(), "Test error")
+}
+
+func TestServiceCreateTaskListNewTaskListError(t *testing.T) {
+	mockCtrl := gomock.NewController(t)
+	defer mockCtrl.Finish()
+
+	mockObj := mock.NewMockTaskListRepositoryInterface(mockCtrl)
+	service := service.NewTaskListService(mockObj)
+	_, err := service.CreateTaskList("")
+
+	assert.NotEqual(t, err, nil)
+	assert.Equal(t, "name: Missing required field", err.Error())
 }
