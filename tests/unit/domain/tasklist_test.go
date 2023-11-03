@@ -7,7 +7,7 @@ import (
 	"github.com/tweedledo/core/domain"
 )
 
-func TestNewTaskListConstructorSuccess(t *testing.T) {
+func TestTaskList_NewTaskListConstructorSuccess(t *testing.T) {
 	name := "TestConstructor"
 	task := []*domain.Task{}
 	tasklist, err := domain.NewTaskList(name, task)
@@ -17,7 +17,7 @@ func TestNewTaskListConstructorSuccess(t *testing.T) {
 	}
 }
 
-func TestNewTaskListConstructorError(t *testing.T) {
+func TestTaskList_NewTaskListConstructorError(t *testing.T) {
 	task := []*domain.Task{}
 	_, err := domain.NewTaskList("", task)
 	assert.NotEqual(t, nil, err)

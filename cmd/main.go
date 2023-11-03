@@ -17,5 +17,6 @@ func main() {
 	taskRepository := repository.NewTaskRepository(database)
 	taskService := service.NewTaskService(taskRepository, tasklistService)
 	tasklistController := controller.NewTaskListController(tasklistService, taskService)
-	router.Initialize(tasklistController)
+	taskController := controller.NewTaskController(taskService)
+	router.Initialize(tasklistController, taskController)
 }

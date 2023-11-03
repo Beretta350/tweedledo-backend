@@ -5,8 +5,8 @@ if not exist "%newDirectory%" (
     mkdir "%newDirectory%"
 )
 
-go test .\tests\unit\domain\tasklist_test.go -coverpkg="github.com/tweedledo/core/domain" -coverprofile=".\tests\coverage\coverage-domain.out"
-go test .\tests\unit\service\tasklist_service_test.go -coverpkg="github.com/tweedledo/core/service" -coverprofile=".\tests\coverage\coverage-service.out"
+go test .\tests\unit\domain\ -coverpkg="github.com/tweedledo/core/domain" -coverprofile=".\tests\coverage\coverage-domain.out"
+go test .\tests\unit\service\ -coverpkg="github.com/tweedledo/core/service" -coverprofile=".\tests\coverage\coverage-service.out"
 
 set "sourceFile=.\tests\coverage\coverage-domain.out"
 set "appendFile=.\tests\coverage\coverage-service.out"
