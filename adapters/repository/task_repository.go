@@ -28,11 +28,17 @@ func (t *TaskRepository) UpdateTask(task *domain.Task) (*domain.Task, error) {
 	}
 	return task, result.Error
 }
-func (t *TaskRepository) DeleteTask(task *domain.Task) (*domain.Task, error) {
-	result := t.DB.Delete(task)
+func (t *TaskRepository) DeleteTaskById(id string) (int64, error) {
+	var task *domain.Task
+	result := t.DB.Where("id = ?", id).Delete(&task)
 	if result.RowsAffected == 0 {
 		log.Print("P=Repository M=DeleteTask no rows affected")
 	}
+	return result.RowsAffected, result.Error
+}
+func (t *TaskRepository) GetTaskById(id string) (*domain.Task, error) {
+	var task *domain.Task
+	result := t.DB.Where("id = ?", id).First(&task)
 	return task, result.Error
 }
 func (t *TaskRepository) GetTasksInTaskList(tasklistId string) ([]*domain.Task, error) {
