@@ -22,7 +22,7 @@ var tasklistSuccess = &domain.TaskList{
 	Tasks: []*domain.Task{},
 }
 
-func TestServiceGetTaskListByIdSuccess(t *testing.T) {
+func TestTaskList_ServiceGetTaskListByIdSuccess(t *testing.T) {
 	mockCtrl := gomock.NewController(t)
 	defer mockCtrl.Finish()
 
@@ -32,7 +32,7 @@ func TestServiceGetTaskListByIdSuccess(t *testing.T) {
 	service := service.NewTaskListService(mockObj)
 	response, err := service.GetTaskListById("TEST")
 	if err != nil {
-		t.Fatalf("P=Service T=TestServiceGetTaskListByIdSuccess failed error=%v", err.Error())
+		t.Fatalf("P=Service T=TestTaskList_ServiceGetTaskListByIdSuccess failed error=%v", err.Error())
 		t.FailNow()
 	}
 
@@ -41,7 +41,7 @@ func TestServiceGetTaskListByIdSuccess(t *testing.T) {
 	assert.Equal(t, response.Tasks, []*domain.Task{})
 }
 
-func TestServiceGetTaskListByIdError(t *testing.T) {
+func TestTaskList_ServiceGetTaskListByIdError(t *testing.T) {
 	mockCtrl := gomock.NewController(t)
 	defer mockCtrl.Finish()
 
@@ -55,7 +55,7 @@ func TestServiceGetTaskListByIdError(t *testing.T) {
 	assert.Equal(t, err.Error(), "Test error")
 }
 
-func TestServiceGetAllTaskListSuccess(t *testing.T) {
+func TestTaskList_ServiceGetAllTaskListSuccess(t *testing.T) {
 	mockCtrl := gomock.NewController(t)
 	defer mockCtrl.Finish()
 
@@ -68,7 +68,7 @@ func TestServiceGetAllTaskListSuccess(t *testing.T) {
 	service := service.NewTaskListService(mockObj)
 	response, err := service.GetAllTaskList()
 	if err != nil {
-		t.Fatalf("P=Service T=TestServiceGetAllTaskListSuccess failed error=%v", err.Error())
+		t.Fatalf("P=Service T=TestTaskList_ServiceGetAllTaskListSuccess failed error=%v", err.Error())
 		t.FailNow()
 	}
 
@@ -78,7 +78,7 @@ func TestServiceGetAllTaskListSuccess(t *testing.T) {
 	assert.Equal(t, response[0].Tasks, []*domain.Task{})
 }
 
-func TestServiceGetAllTaskListError(t *testing.T) {
+func TestTaskList_ServiceGetAllTaskListError(t *testing.T) {
 	mockCtrl := gomock.NewController(t)
 	defer mockCtrl.Finish()
 
@@ -92,7 +92,7 @@ func TestServiceGetAllTaskListError(t *testing.T) {
 	assert.Equal(t, err.Error(), "Test error")
 }
 
-func TestServiceCreateTaskListSuccess(t *testing.T) {
+func TestTaskList_ServiceCreateTaskListSuccess(t *testing.T) {
 	mockCtrl := gomock.NewController(t)
 	defer mockCtrl.Finish()
 
@@ -102,7 +102,7 @@ func TestServiceCreateTaskListSuccess(t *testing.T) {
 	service := service.NewTaskListService(mockObj)
 	response, err := service.CreateTaskList("Test")
 	if err != nil {
-		t.Fatalf("P=Service T=TestServiceCreateTaskListSuccess failed error=%v", err.Error())
+		t.Fatalf("P=Service T=TestTaskList_ServiceCreateTaskListSuccess failed error=%v", err.Error())
 		t.FailNow()
 	}
 
@@ -111,7 +111,7 @@ func TestServiceCreateTaskListSuccess(t *testing.T) {
 	assert.Equal(t, response.Tasks, []*domain.Task{})
 }
 
-func TestServiceCreateTaskListRepositoryError(t *testing.T) {
+func TestTaskList_ServiceCreateTaskListRepositoryError(t *testing.T) {
 	mockCtrl := gomock.NewController(t)
 	defer mockCtrl.Finish()
 
@@ -125,7 +125,7 @@ func TestServiceCreateTaskListRepositoryError(t *testing.T) {
 	assert.Equal(t, err.Error(), "Test error")
 }
 
-func TestServiceCreateTaskListNewTaskListError(t *testing.T) {
+func TestTaskList_ServiceCreateTaskListNewTaskListError(t *testing.T) {
 	mockCtrl := gomock.NewController(t)
 	defer mockCtrl.Finish()
 

@@ -45,7 +45,7 @@ func (s *TaskService) CreateTask(name string, desc string, tasklistId string) (*
 		return task, err
 	}
 
-	s.taskRepository.CreateTask(task)
+	task, err = s.taskRepository.CreateTask(task)
 	if err != nil {
 		log.Printf("P=Service M=CreateTask name=%v error=%v", name, err.Error())
 		return task, err
@@ -64,7 +64,7 @@ func (s *TaskService) UpdateTask(id, name, desc string) (*domain.Task, error) {
 	task.Name = name
 	task.Description = desc
 
-	s.taskRepository.UpdateTask(task)
+	task, err = s.taskRepository.UpdateTask(task)
 	if err != nil {
 		log.Printf("P=Service M=UpdateTask id=%v error=%v", id, err.Error())
 		return task, err
