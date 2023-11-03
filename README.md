@@ -1,3 +1,5 @@
+<img src="tweedledo-logo.png" width="150" height="145">
+
 # tweedledo-backend
 
 This To-Do List application backend is built in the Go programming language (Golang) and adheres to the principles of Hexagonal Architecture, SOLID, and Clean Architecture. It offers a robust and maintainable foundation for managing tasks and to-do lists.
@@ -63,5 +65,3 @@ Run unit tests and generate coverage:
 We welcome contributions to this To-Do List application backend. If you're interested in enhancing or extending its functionality, feel free to create pull requests or open issues on the repository.
 
 Enjoy using this flexible To-Do List backend built with Golang and Hexagonal Architecture!
-
-<img src="tweedledo-logo.png" width="100" height="100">
