@@ -48,6 +48,16 @@ Use the API endpoints to manage your tasks and to-do lists effectively. The Hexa
 
 **OBS: Tasks and Task Lists IDs are UUIDs**
 
+## Testing
+
+The application is covered by both unit tests and integration tests. Unit tests aim to cover every line of code to ensure a good level of quality, while integration tests check that the application functions correctly as a whole.
+
+Run unit tests and generate coverage:
+    -  ```./run-tests.bat``` (for windows)
+    - ```./run-tests.sh``` (for linux)
+
+**OBS: Integration tests must be run manually**
+
 ## Contributions
 
 We welcome contributions to this To-Do List application backend. If you're interested in enhancing or extending its functionality, feel free to create pull requests or open issues on the repository.
