@@ -3,6 +3,7 @@ package service
 import (
 	"fmt"
 	"log"
+	"time"
 
 	"github.com/tweedledo/core/domain"
 	"github.com/tweedledo/core/ports"
@@ -63,6 +64,7 @@ func (s *TaskService) UpdateTask(id, name, desc string) (*domain.Task, error) {
 
 	task.Name = name
 	task.Description = desc
+	task.UpdatedAt = time.Now()
 
 	task, err = s.taskRepository.UpdateTask(task)
 	if err != nil {

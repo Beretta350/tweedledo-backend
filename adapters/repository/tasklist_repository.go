@@ -40,10 +40,11 @@ func (t *TaskListRepository) UpdateTaskList(tasklist *domain.TaskList) (*domain.
 	}
 	return tasklist, result.Error
 }
-func (t *TaskListRepository) DeleteTaskList(tasklist *domain.TaskList) (*domain.TaskList, error) {
-	result := t.DB.Delete(tasklist)
+func (t *TaskListRepository) DeleteTaskListById(id string) (int64, error) {
+	var tasklist *domain.TaskList
+	result := t.DB.Where("id = ?", id).Delete(&tasklist)
 	if result.RowsAffected == 0 {
-		log.Print("P=Repository M=UpdateTaskList no rows affected")
+		log.Print("P=Repository M=DeleteTask no rows affected")
 	}
-	return tasklist, result.Error
+	return result.RowsAffected, result.Error
 }
