@@ -1,4 +1,4 @@
-package tests
+package integration_tests
 
 import (
 	"bytes"
@@ -199,9 +199,37 @@ func TestIntegrationTaskList_DeleteTaskList(t *testing.T) {
 		t.FailNow()
 	}
 
+	deleteResponse := "{\"message\":\"success with 1 rows affected\"}"
+	assert.Equal(t, rr.Body.String(), deleteResponse)
+
 	_, err := taskListRepository.GetTaskListById(response.ID)
 	if err == nil {
 		t.Errorf("Error to get data from database: got %v want %v", nil, response)
+		t.FailNow()
+	}
+
+	assert.Equal(t, err.Error(), "record not found")
+}
+
+func TestIntegrationTaskList_DeleteTaskListAlreadyDeleted(t *testing.T) {
+	router := setupTest()
+	putRequest := fmt.Sprintf(`/tasklist/%v`, "anyID")
+	req, _ := http.NewRequest("DELETE", putRequest, nil)
+	rr := httptest.NewRecorder()
+
+	router.ServeHTTP(rr, req)
+
+	if rr.Code != http.StatusOK {
+		t.Errorf("handler returned wrong status code: got %v want %v", rr.Code, http.StatusOK)
+		t.FailNow()
+	}
+
+	deleteResponse := "{\"message\":\"success with 0 rows affected\"}"
+	assert.Equal(t, rr.Body.String(), deleteResponse)
+
+	_, err := taskListRepository.GetTaskListById("anyID")
+	if err == nil {
+		t.Errorf("Error to get data from database: got %v want %v", nil, "anyID")
 		t.FailNow()
 	}
 
