@@ -34,7 +34,7 @@ var taskUpdatedSuccess = &domain.Task{
 	TaskList:    &domain.TaskList{},
 }
 
-func initMocks(t *testing.T) (*gomock.Controller, *mock.MockTaskRepositoryInterface, *mock.MockTaskListServiceInterface) {
+func initTaskMocks(t *testing.T) (*gomock.Controller, *mock.MockTaskRepositoryInterface, *mock.MockTaskListServiceInterface) {
 	mockCtrl := gomock.NewController(t)
 	mockTaskListService := mock.NewMockTaskListServiceInterface(mockCtrl)
 	mockTaskRepository := mock.NewMockTaskRepositoryInterface(mockCtrl)
@@ -42,7 +42,7 @@ func initMocks(t *testing.T) (*gomock.Controller, *mock.MockTaskRepositoryInterf
 }
 
 func TestTask_ServiceGetTaskByIdSuccess(t *testing.T) {
-	mockCtrl, repository, taskListService := initMocks(t)
+	mockCtrl, repository, taskListService := initTaskMocks(t)
 	defer mockCtrl.Finish()
 	repository.EXPECT().GetTaskById(gomock.Any()).Return(taskSuccess, nil)
 
@@ -59,7 +59,7 @@ func TestTask_ServiceGetTaskByIdSuccess(t *testing.T) {
 }
 
 func TestTask_ServiceGetTaskByIdError(t *testing.T) {
-	mockCtrl, repository, taskListService := initMocks(t)
+	mockCtrl, repository, taskListService := initTaskMocks(t)
 	defer mockCtrl.Finish()
 	repository.EXPECT().GetTaskById(gomock.Any()).Return(nil, errors.New("Test error"))
 
@@ -71,7 +71,7 @@ func TestTask_ServiceGetTaskByIdError(t *testing.T) {
 }
 
 func TestTask_ServiceCreateTaskSuccess(t *testing.T) {
-	mockCtrl, repository, taskListService := initMocks(t)
+	mockCtrl, repository, taskListService := initTaskMocks(t)
 	defer mockCtrl.Finish()
 	taskListService.EXPECT().GetTaskListById(gomock.Any()).Return(tasklistSuccess, nil)
 	repository.EXPECT().CreateTask(gomock.Any()).Return(taskSuccess, nil)
@@ -89,7 +89,7 @@ func TestTask_ServiceCreateTaskSuccess(t *testing.T) {
 }
 
 func TestTask_ServiceCreateTaskRepositoryError(t *testing.T) {
-	mockCtrl, repository, taskListService := initMocks(t)
+	mockCtrl, repository, taskListService := initTaskMocks(t)
 	defer mockCtrl.Finish()
 	taskListService.EXPECT().GetTaskListById(gomock.Any()).Return(tasklistSuccess, nil)
 	repository.EXPECT().CreateTask(gomock.Any()).Return(nil, errors.New("Test error"))
@@ -102,7 +102,7 @@ func TestTask_ServiceCreateTaskRepositoryError(t *testing.T) {
 }
 
 func TestTask_ServiceCreateTaskNewTaskError(t *testing.T) {
-	mockCtrl, repository, taskListService := initMocks(t)
+	mockCtrl, repository, taskListService := initTaskMocks(t)
 	defer mockCtrl.Finish()
 	taskListService.EXPECT().GetTaskListById(gomock.Any()).Return(tasklistSuccess, nil)
 
@@ -114,7 +114,7 @@ func TestTask_ServiceCreateTaskNewTaskError(t *testing.T) {
 }
 
 func TestTask_ServiceCreateTaskGetTaskListError(t *testing.T) {
-	mockCtrl, repository, taskListService := initMocks(t)
+	mockCtrl, repository, taskListService := initTaskMocks(t)
 	defer mockCtrl.Finish()
 	taskListService.EXPECT().GetTaskListById(gomock.Any()).Return(nil, errors.New("Test Error"))
 
@@ -126,7 +126,7 @@ func TestTask_ServiceCreateTaskGetTaskListError(t *testing.T) {
 }
 
 func TestTask_ServiceUpdateTaskSuccess(t *testing.T) {
-	mockCtrl, repository, taskListService := initMocks(t)
+	mockCtrl, repository, taskListService := initTaskMocks(t)
 	defer mockCtrl.Finish()
 	repository.EXPECT().GetTaskById(gomock.Any()).Return(taskSuccess, nil)
 	repository.EXPECT().UpdateTask(gomock.Any()).Return(taskUpdatedSuccess, nil)
@@ -145,7 +145,7 @@ func TestTask_ServiceUpdateTaskSuccess(t *testing.T) {
 }
 
 func TestTask_ServiceUpdateTaskGetTaskError(t *testing.T) {
-	mockCtrl, repository, taskListService := initMocks(t)
+	mockCtrl, repository, taskListService := initTaskMocks(t)
 	defer mockCtrl.Finish()
 	repository.EXPECT().GetTaskById(gomock.Any()).Return(nil, errors.New("Test Error"))
 
@@ -157,7 +157,7 @@ func TestTask_ServiceUpdateTaskGetTaskError(t *testing.T) {
 }
 
 func TestTask_ServiceUpdateTaskUpdateError(t *testing.T) {
-	mockCtrl, repository, taskListService := initMocks(t)
+	mockCtrl, repository, taskListService := initTaskMocks(t)
 	defer mockCtrl.Finish()
 	repository.EXPECT().GetTaskById(gomock.Any()).Return(taskSuccess, nil)
 	repository.EXPECT().UpdateTask(gomock.Any()).Return(nil, errors.New("Test Error"))
@@ -170,7 +170,7 @@ func TestTask_ServiceUpdateTaskUpdateError(t *testing.T) {
 }
 
 func TestTask_ServiceDeleteTaskSuccess(t *testing.T) {
-	mockCtrl, repository, taskListService := initMocks(t)
+	mockCtrl, repository, taskListService := initTaskMocks(t)
 	defer mockCtrl.Finish()
 	repository.EXPECT().DeleteTaskById(gomock.Any()).Return(int64(1), nil)
 
@@ -185,7 +185,7 @@ func TestTask_ServiceDeleteTaskSuccess(t *testing.T) {
 }
 
 func TestTask_ServiceDeleteTaskError(t *testing.T) {
-	mockCtrl, repository, taskListService := initMocks(t)
+	mockCtrl, repository, taskListService := initTaskMocks(t)
 	defer mockCtrl.Finish()
 	repository.EXPECT().DeleteTaskById(gomock.Any()).Return(int64(0), errors.New("Test Error"))
 
