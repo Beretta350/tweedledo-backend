@@ -5,8 +5,9 @@ if not exist "%newDirectory%" (
     mkdir "%newDirectory%"
 )
 
-go test .\tests\unit\domain\ -coverpkg="github.com/tweedledo/core/domain" -coverprofile=".\tests\coverage\coverage-domain.out"
-go test .\tests\unit\service\ -coverpkg="github.com/tweedledo/core/service" -coverprofile=".\tests\coverage\coverage-service.out"
+go test github.com\tweedledo\tests\integration
+go test github.com\tweedledo\tests\unit\domain -coverpkg="github.com/tweedledo/core/domain" -coverprofile=".\tests\coverage\coverage-domain.out"
+go test github.com\tweedledo\tests\unit\service -coverpkg="github.com/tweedledo/core/service" -coverprofile=".\tests\coverage\coverage-service.out"
 
 set "sourceFile=.\tests\coverage\coverage-domain.out"
 set "appendFile=.\tests\coverage\coverage-service.out"
@@ -26,5 +27,4 @@ echo Complete covarage in "%thirdFile%" file
 
 call go tool cover -html=%thirdFile%
 
-del temp.txt
 del temp2.txt
