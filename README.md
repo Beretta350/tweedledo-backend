@@ -2,6 +2,11 @@
 
 # tweedledo-backend
 
+![Golang](https://img.shields.io/badge/Go-00ADD8?style=for-the-badge&logo=go&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2CA5E0?style=for-the-badge&logo=docker&logoColor=white)
+![Postgres](https://img.shields.io/badge/Postgres-316192?style=for-the-badge&logo=postgresql&logoColor=white)
+![SQLite](https://img.shields.io/badge/SQLite-07405E?style=for-the-badge&logo=sqlite&logoColor=white)
+
 This is To-Do List application backend built in Go programming language (Golang) using the principles of clean architecture, SOLID, and hexagonal architecture. It offers a simple, robust and maintainable foundation for managing tasks and to-do lists.
 
 ## Key Technologies and Frameworks
