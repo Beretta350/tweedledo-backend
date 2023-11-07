@@ -20,14 +20,12 @@ import (
 )
 
 var taskListRepository *repository.TaskListRepository
-var taskRepository *repository.TaskRepository
 
-func setupTest() *gin.Engine {
+func setupTaskListIntegrationTest() *gin.Engine {
 	os.Setenv("env", "test")
 	database := db.ConnectDB(os.Getenv("env"))
 	taskListRepository = repository.NewTaskListRepository(database)
 	tasklistService := service.NewTaskListService(taskListRepository)
-	taskRepository = repository.NewTaskRepository(database)
 	tasklistController := controller.NewTaskListController(tasklistService)
 	routes := gin.Default()
 	routes = router.AddTaskListsRoutes(routes, tasklistController)
@@ -62,14 +60,14 @@ func executeCreateTaskListPostRequest(t *testing.T, router *gin.Engine, name str
 }
 
 func TestIntegrationTaskList_GetTaskListByIdDontExists(t *testing.T) {
-	router := setupTest()
+	router := setupTaskListIntegrationTest()
 	req, _ := http.NewRequest("GET", "/tasklist/invalid-id", nil)
 	rr := httptest.NewRecorder()
 
 	router.ServeHTTP(rr, req)
 
 	if rr.Code != http.StatusInternalServerError {
-		t.Errorf("handler returned wrong status code: got %v want %v", rr.Code, http.StatusOK)
+		t.Errorf("handler returned wrong status code: got %v want %v", rr.Code, http.StatusInternalServerError)
 		t.FailNow()
 	}
 
@@ -79,7 +77,7 @@ func TestIntegrationTaskList_GetTaskListByIdDontExists(t *testing.T) {
 }
 
 func TestIntegrationTaskList_GetTaskListByIdExists(t *testing.T) {
-	router := setupTest()
+	router := setupTaskListIntegrationTest()
 	responsePost := executeCreateTaskListPostRequest(t, router, "IntegrationTest")
 	getRequest := fmt.Sprintf(`/tasklist/%v`, responsePost.ID)
 	req, _ := http.NewRequest("GET", getRequest, nil)
@@ -102,7 +100,7 @@ func TestIntegrationTaskList_GetTaskListByIdExists(t *testing.T) {
 }
 
 func TestIntegrationTaskList_GetAllTaskListNoData(t *testing.T) {
-	router := setupTest()
+	router := setupTaskListIntegrationTest()
 	req, _ := http.NewRequest("GET", "/tasklist", nil)
 	rr := httptest.NewRecorder()
 
@@ -119,7 +117,7 @@ func TestIntegrationTaskList_GetAllTaskListNoData(t *testing.T) {
 }
 
 func TestIntegrationTaskList_GetAllTaskListWithData(t *testing.T) {
-	router := setupTest()
+	router := setupTaskListIntegrationTest()
 	responsePost := executeCreateTaskListPostRequest(t, router, "IntegrationTest")
 	req, _ := http.NewRequest("GET", "/tasklist", nil)
 	rr := httptest.NewRecorder()
@@ -144,7 +142,7 @@ func TestIntegrationTaskList_GetAllTaskListWithData(t *testing.T) {
 }
 
 func TestIntegrationTaskList_CreateTaskList(t *testing.T) {
-	router := setupTest()
+	router := setupTaskListIntegrationTest()
 	response := executeCreateTaskListPostRequest(t, router, "IntegrationTest")
 
 	tasklistData, err := taskListRepository.GetTaskListById(response.ID)
@@ -159,7 +157,7 @@ func TestIntegrationTaskList_CreateTaskList(t *testing.T) {
 }
 
 func TestIntegrationTaskList_UpdateTaskList(t *testing.T) {
-	router := setupTest()
+	router := setupTaskListIntegrationTest()
 	response := executeCreateTaskListPostRequest(t, router, "IntegrationTest")
 	putRequest := fmt.Sprintf(`/tasklist/%v`, response.ID)
 	jsonPayload := createJsonPayloadWithName("UpdatedIntegrationTest")
@@ -186,7 +184,7 @@ func TestIntegrationTaskList_UpdateTaskList(t *testing.T) {
 }
 
 func TestIntegrationTaskList_DeleteTaskList(t *testing.T) {
-	router := setupTest()
+	router := setupTaskListIntegrationTest()
 	response := executeCreateTaskListPostRequest(t, router, "IntegrationTest")
 	putRequest := fmt.Sprintf(`/tasklist/%v`, response.ID)
 	req, _ := http.NewRequest("DELETE", putRequest, nil)
@@ -212,7 +210,7 @@ func TestIntegrationTaskList_DeleteTaskList(t *testing.T) {
 }
 
 func TestIntegrationTaskList_DeleteTaskListAlreadyDeleted(t *testing.T) {
-	router := setupTest()
+	router := setupTaskListIntegrationTest()
 	putRequest := fmt.Sprintf(`/tasklist/%v`, "anyID")
 	req, _ := http.NewRequest("DELETE", putRequest, nil)
 	rr := httptest.NewRecorder()
