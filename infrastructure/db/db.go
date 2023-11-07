@@ -7,7 +7,7 @@ import (
 	"runtime"
 
 	"github.com/joho/godotenv"
-	"github.com/tweedledo/application/domain/model"
+	"github.com/tweedledo/core/domain"
 	"gorm.io/driver/postgres"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
@@ -22,7 +22,7 @@ func init() {
 
 	err := godotenv.Load(basepath + "../../.env")
 	if err != nil {
-		log.Fatalf("Error loading .env files")
+		log.Printf("Error loading .env files")
 	}
 }
 
@@ -32,17 +32,21 @@ func ConnectDB(env string) *gorm.DB {
 	var err error
 
 	if env != "test" {
-		log.Printf("P=db M=ConnectDB env=%v connecting in postgres", env)
-		dsn = os.Getenv("dsn")
+		log.Printf("P=db M=ConnectDB env=%v trying to connect in postgres", env)
+		if len(os.Getenv("POSTGRES_URL")) > 0 {
+			dsn = os.Getenv("POSTGRES_URL")
+		} else {
+			dsn = os.Getenv("dsn")
+		}
 		db, err = gorm.Open(postgres.Open(dsn))
 	} else {
+		log.Printf("P=db M=ConnectDB env=%v trying to connect in memory sqlite", env)
 		dsn = os.Getenv("dsnTest")
 		db, err = gorm.Open(sqlite.Open(dsn))
 	}
 
 	if err != nil {
-		log.Fatalf("Error connecting to database: %v", err)
-		panic(err)
+		panic("Error connecting to database:" + err.Error())
 	}
 
 	if os.Getenv("debug") == "true" {
@@ -51,7 +55,7 @@ func ConnectDB(env string) *gorm.DB {
 
 	if os.Getenv("AutoMigrateDb") == "true" {
 		log.Printf("P=db M=ConnectDB env=%v auto migrating", env)
-		db.AutoMigrate(&model.TaskList{}, &model.Task{})
+		db.AutoMigrate(&domain.TaskList{}, &domain.Task{})
 	}
 
 	log.Printf("P=db M=ConnectDB env=%v database connected", env)
