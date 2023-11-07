@@ -46,12 +46,14 @@ Use the API endpoints to manage your tasks and to-do lists effectively. The Hexa
 
 ## Example API Endpoints
 - `GET /tasklist`: Retrieve all list of tasks.
-- `GET /tasklist/{id}`: Retrieve a list of tasks.
-- `GET /task/{id}`: Retrieve a specific task by ID.
+- `GET /tasklist/{id}`: Retrieve a list of tasks by ID.
 - `POST /tasklist`: Create a new task list.
+- `PUT /tasklist/{id}`: Update an tasklist.
+- `DELETE /tasklist/{id}`: Delete a tasklist from ID.
+- `GET /task/{id}`: Retrieve task by ID.
 - `POST /task`: Create a new task.
-- `PUT /tasks/{id}`: Update an existing task.
-- `DELETE /tasks/{id}`: Delete a task.
+- `PUT /task/{id}`: Update an existing task.
+- `DELETE /task/{id}`: Delete a task from ID.
 
 **OBS: Tasks and Task Lists IDs are UUIDs**
 
