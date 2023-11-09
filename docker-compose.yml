@@ -5,6 +5,8 @@ services:
       container_name: tweedledo-backend
       environment:
        - POSTGRES_URL=host=postgres user=postgres password=postgres dbname=localdb port=5432 sslmode=disable
+      env_file:
+       - ./infrastructure/.env
       build:
         context: .
         dockerfile: Dockerfile
