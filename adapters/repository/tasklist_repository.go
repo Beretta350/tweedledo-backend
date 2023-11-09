@@ -41,6 +41,12 @@ func (t *TaskListRepository) UpdateTaskList(tasklist *domain.TaskList) (*domain.
 	return tasklist, result.Error
 }
 func (t *TaskListRepository) DeleteTaskListById(id string) (int64, error) {
+	var task *domain.Task
+	resultTask := t.DB.Where("tasklist_id = ?", id).Delete(&task)
+	if resultTask.Error != nil {
+		return 0, resultTask.Error
+	}
+
 	var tasklist *domain.TaskList
 	result := t.DB.Where("id = ?", id).Delete(&tasklist)
 	if result.RowsAffected == 0 {
