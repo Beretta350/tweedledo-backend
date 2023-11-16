@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-    tweedledo-backend:
+    application:
       container_name: tweedledo-backend
       environment:
        - POSTGRES_URL=host=postgres user=postgres password=postgres dbname=localdb port=5432 sslmode=disable
@@ -15,6 +15,10 @@ services:
          condition: service_healthy
       ports:
         - "8080:8080"
+      volumes:
+        - ./core:/app/core
+        - ./adapters:/app/adapters
+        - ./cmd:/app/cmd
 
     postgres:
         image: postgres:latest
